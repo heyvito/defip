@@ -178,8 +178,6 @@ func sortWeighted(list []netip.Addr) {
 		}
 		weightList[i].weight = weight
 		weightList[i].addr = v
-
-		fmt.Printf("IP %s has weight %d\n", v, weight)
 	}
 
 	slices.SortFunc(weightList, func(a, b ipWeight) int {
