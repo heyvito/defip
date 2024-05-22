@@ -117,10 +117,6 @@ func FindDefaultIP(kind NetRouteKind) (*netip.Addr, error) {
 				continue
 			}
 
-			if err != nil {
-				continue
-			}
-
 			var add netip.Addr
 			if v4 := rawAdd.IP.To4(); v4 != nil {
 				if kind != NetRouteKindV4 {
@@ -191,6 +187,9 @@ func sortWeighted(list []netip.Addr) {
 }
 
 func selectIP(kind NetRouteKind, list []netip.Addr) *netip.Addr {
+	if len(list) == 0 {
+		return nil
+	}
 	list = filter(list, func(i netip.Addr) bool {
 		return (kind == NetRouteKindV6 && i.Is6()) ||
 			(kind == NetRouteKindV4 && i.Is4())
